@@ -1,0 +1,21 @@
+version: '3.9'
+services:
+
+  tlif_db: 
+    # UPON DEPLOYMENT: restart: always
+    image: postgres
+    env_file:
+      - ./.env
+    environment:
+      POSTGRES_HOST: "localhost"
+    expose:
+      - 5433
+    ports:
+      - 5433:5432 
+    volumes:
+      - tlif_data:/var/lib/postgresql/data
+
+volumes:
+  tlif_data:
+
+

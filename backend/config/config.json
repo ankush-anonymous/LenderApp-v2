@@ -1,0 +1,10 @@
+{
+  "development": {
+    "username": "root",
+    "password": "test-password",
+    "database": "tlif_db",
+    "host": "localhost",
+    "dialect": "postgres",
+    "port": 5433
+  }
+}
