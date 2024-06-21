@@ -1,0 +1,119 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Center {
+  uuid            String     @id @default(uuid())
+  center_code     String
+  branch_name     String
+  ifsc            String
+  center_incharge String
+  employees       Employee[]
+  clients         Client[]
+}
+
+model Employee {
+  uuid       String   @id @default(uuid())
+  name       String
+  email      String   @unique
+  phone      String
+  photo      String
+  address    String
+  govt_id    String
+  roles      String[]
+  centerUuid String
+  center     Center   @relation(fields: [centerUuid], references: [uuid])
+  clients    Client[] @relation("AgentClients")
+}
+
+model Client {
+  uuid                    String            @id @default(uuid())
+  name                    String
+  spouse                  String
+  father                  String
+  mother                  String
+  date_of_birth           DateTime
+  house_type              String
+  house_status            String
+  religion                String
+  marital_status          String
+  address                 String
+  contact                 String
+  residence_customer_year Int
+  agentUuid               String
+  agent                   Employee          @relation("AgentClients", fields: [agentUuid], references: [uuid])
+  guarantorUuid           String
+  guarantor               Guarantor         @relation(fields: [guarantorUuid], references: [uuid])
+  bank_details            BankDetails?
+  family                  Family[]
+  house_hold              HouseHoldDetails?
+  documents               Documents[]
+  Center                  Center?           @relation(fields: [centerUuid], references: [uuid])
+  centerUuid              String?
+}
+
+model Guarantor {
+  uuid          String      @id @default(uuid())
+  name          String
+  spouse        String
+  father        String
+  mother        String
+  relation      String
+  date_of_birth DateTime
+  contact       String
+  address       String
+  house_status  String
+  documents     Documents[]
+  clients       Client[]
+}
+
+model BankDetails {
+  uuid           String @id @default(uuid())
+  account_number String
+  ifsc           String
+  branch_name    String
+  bank_name      String
+  client         Client @relation(fields: [uuid], references: [uuid])
+}
+
+model Family {
+  uuid          String   @id @default(uuid())
+  name          String
+  relation      String
+  date_of_birth DateTime
+  occupation    String
+  education     String
+  income        Float
+  clientUuid    String
+  client        Client   @relation(fields: [clientUuid], references: [uuid])
+}
+
+model HouseHoldDetails {
+  uuid      String @id @default(uuid())
+  loan      Float
+  education Float
+  medical   Float
+  rent      Float
+  others    Float
+  income    Float
+  expense   Float
+  client    Client @relation(fields: [uuid], references: [uuid])
+}
+
+model Documents {
+  uuid          String     @id @default(uuid())
+  smart_card    String
+  aadhar_card   String
+  voter_id_card String
+  pan_card      String
+  optional      String
+  clientUuid    String?
+  client        Client?    @relation(fields: [clientUuid], references: [uuid])
+  guarantorUuid String?
+  guarantor     Guarantor? @relation(fields: [guarantorUuid], references: [uuid])
+}
