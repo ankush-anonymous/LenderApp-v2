@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -12,6 +12,10 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import localforage from "localforage";
 
 function Copyright(props) {
   return (
@@ -36,13 +40,34 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignInPage() {
-  const handleSubmit = (event) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get("email"),
       password: data.get("password"),
     });
+
+    const postData = {
+      email: data.get("email"),
+      password: data.get("password"),
+    };
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/login`,
+        postData
+      );
+
+      if (response.status === 200) {
+        await localforage.setItem("API_TOKEN", response?.data?.token ?? null);
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      toast.error("Invalid Credentials");
+      console.log(error);
+    }
   };
 
   return (

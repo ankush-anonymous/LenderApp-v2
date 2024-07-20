@@ -1,17 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import Typography from "@mui/material/Typography";
 import LayoutComponent from "../Components/LayoutComponent";
+import GridTableComponent from "../Components/GridTableComponent";
+import CenterComponent from "../Components/CenterComponent";
 
 const DashboardPage = () => {
+  const [page, setPage] = useState("Center");
   return (
-    <LayoutComponent>
+    <LayoutComponent setPage={setPage}>
+      {page === "Center" ? (
+        <CenterComponent />
+      ) : page === "Employee" ? (
+        <h1>Employee</h1>
+      ) : (
+        <h1>Something else</h1>
+      )}
+      {/* 
       <Typography variant="h4" component="div" gutterBottom>
         Dashboard Page
       </Typography>
       <Typography paragraph>
-        This is the dashboard content. It will appear between the AppBar and the
-        Drawer.
-      </Typography>
+        <GridTableComponent />
+      </Typography> */}
     </LayoutComponent>
   );
 };

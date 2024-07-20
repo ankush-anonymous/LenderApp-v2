@@ -7,7 +7,7 @@ import { SidebarComponent } from "./SidebarComponent"; // Import the SidebarComp
 
 const drawerWidth = 240;
 
-export default function LayoutComponent({ children }) {
+export default function LayoutComponent({ children, setPage }) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
@@ -19,6 +19,7 @@ export default function LayoutComponent({ children }) {
       <CssBaseline />
       <NavBarComponent handleDrawerToggle={handleDrawerToggle} />
       <SidebarComponent
+        setPage={setPage}
         mobileOpen={mobileOpen}
         handleDrawerToggle={handleDrawerToggle}
       />

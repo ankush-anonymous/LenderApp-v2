@@ -18,7 +18,7 @@ import Typography from "@mui/material/Typography";
 
 const drawerWidth = 240;
 
-export function SidebarComponent({ mobileOpen, handleDrawerToggle }) {
+export function SidebarComponent({ mobileOpen, handleDrawerToggle, setPage }) {
   const drawer = (
     <div>
       <Toolbar />
@@ -37,9 +37,13 @@ export function SidebarComponent({ mobileOpen, handleDrawerToggle }) {
       </List>
       <Divider />
       <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
+        {["Center", "Employee", "Clients"].map((text, index) => (
           <ListItem key={text} disablePadding>
-            <ListItemButton>
+            <ListItemButton
+              onClick={() => {
+                setPage(text);
+              }}
+            >
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
               </ListItemIcon>
