@@ -14,10 +14,10 @@ import {
   GridRowEditStopReasons,
 } from "@mui/x-data-grid";
 
-import EditToolbar from "../Components/EditToolbar";
-import Loading from "../Components/LoadingComponent";
+import EditToolbar from "../EditToolbar";
+import Loading from "../LoadingComponent";
 
-import useMachineMaster from "../utils/MachineMaster";
+import useMachineMaster from "../../utils/MachineMaster";
 
 export default function FullFeaturedCrudGrid() {
   const [rows, setRows] = useState([]);

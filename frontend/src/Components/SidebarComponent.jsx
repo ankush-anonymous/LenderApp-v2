@@ -23,7 +23,7 @@ export function SidebarComponent({ mobileOpen, handleDrawerToggle, setPage }) {
     <div>
       <Toolbar />
       <Divider />
-      <List>
+      {/* <List>
         {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
@@ -34,7 +34,7 @@ export function SidebarComponent({ mobileOpen, handleDrawerToggle, setPage }) {
             </ListItemButton>
           </ListItem>
         ))}
-      </List>
+      </List> */}
       <Divider />
       <List>
         {["Center", "Employee", "Clients"].map((text, index) => (

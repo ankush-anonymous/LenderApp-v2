@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Typography from "@mui/material/Typography";
 import LayoutComponent from "../Components/LayoutComponent";
-import GridTableComponent from "../Components/GridTableComponent";
 import CenterComponent from "../Components/CenterComponent";
 
 const DashboardPage = () => {

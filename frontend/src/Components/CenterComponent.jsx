@@ -1,9 +1,10 @@
 import React from "react";
-import GridTableComponent from "./GridTableComponent";
+import CenterGridTableComponent from "../Components/GridTables/CenterGridTableComponent";
+
 const CenterComponent = () => {
   return (
     <div>
-      <GridTableComponent />
+      <CenterGridTableComponent />
     </div>
   );
 };

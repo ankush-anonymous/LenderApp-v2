@@ -43,14 +43,13 @@ export default class GenericAPI {
 
   async get(url, params = null) {
     try {
-      const token = await localforage.getItem("access_token");
+      const token = await localforage.getItem("API_TOKEN");
       const response = await axios.get(url, {
         params: params,
         headers: {
-          Authorization: "JWT " + token,
+          Authorization: "Bearer " + token,
         },
       });
-
       return { code: response.status, data: response.data };
     } catch (error) {
       if (error.response) {
@@ -75,11 +74,11 @@ export default class GenericAPI {
 
   async post(url, body) {
     try {
-      const token = await localforage.getItem("access_token");
-
+      const token = await localforage.getItem("API_TOKEN");
+      console.log("done");
       const response = await axios.post(url, body, {
         headers: {
-          Authorization: "JWT " + token,
+          Authorization: "Bearer " + token,
         },
       });
 
@@ -107,11 +106,11 @@ export default class GenericAPI {
 
   async put(url, body, contentType = "application/json") {
     try {
-      const token = await localforage.getItem("access_token");
+      const token = await localforage.getItem("API_TOKEN");
 
       const response = await axios.put(url, body, {
         headers: {
-          Authorization: "JWT " + token,
+          Authorization: "Bearer " + token,
           "Content-Type": contentType,
         },
       });
@@ -140,11 +139,11 @@ export default class GenericAPI {
 
   async delete(url) {
     try {
-      const token = await localforage.getItem("access_token");
+      const token = await localforage.getItem("API_TOKEN");
 
       const response = await axios.delete(url, {
         headers: {
-          Authorization: "JWT " + token,
+          Authorization: "Bearer " + token,
         },
       });
 
