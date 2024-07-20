@@ -12,7 +12,8 @@
     "sequelize": "^6.37.3"
   },
   "scripts": {
-    "start": "node app.js"
+    "start": "nodemon app.js"
+
   },
   "devDependencies": {
     "mysql2": "^3.10.1",

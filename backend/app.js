@@ -15,11 +15,53 @@ app.use(passport.initialize());
 // Ensure migrations have been applied before running the server
 // npx prisma migrate dev --schema=path/to/your/schema.prisma
 
+app.post("/signup", async (req, res) => {
+  const { name, email, password, phone, photo, address, govt_id } = req.body;
+
+  try {
+    // Check if the user already exists
+    const existingUser = await prisma.Employee.findUnique({
+      where: { email },
+    });
+
+    if (existingUser) {
+      return res.status(400).json({ message: "Email already in use" });
+    }
+
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create the new user
+    const newUser = await prisma.Employee.create({
+      data: {
+        name,
+        email,
+        password: hashedPassword,
+        phone,
+        photo,
+        address,
+        govt_id,
+      },
+    });
+
+    // Generate a JWT token
+    // const token = jwt.sign({ id: newUser.uuid }, "your_jwt_secret"); // Use an environment variable for the secret in production
+
+    res.status(201).json({ newUser });
+  } catch (err) {
+    res.status(500).json({ error: "Database query failed", err });
+  }
+});
+
 // Add a route to authenticate users and provide a JWT
 app.post("/login", async (req, res) => {
-  const { email, password } = req.body;
+  const { email: userEmail, password } = req.body;
+  console.log(userEmail);
   try {
-    const user = await prisma.employee.findUnique({ where: { email } });
+    const user = await prisma.Employee.findUnique({
+      where: { email: userEmail },
+    });
+    console.log("test");
     if (!user || !bcrypt.compareSync(password, user.password)) {
       return res.status(401).json({ message: "Invalid email or password" });
     }

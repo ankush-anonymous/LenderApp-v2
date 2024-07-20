@@ -1,40 +1,45 @@
-// create-user.js
+const { PrismaClient } = require("@prisma/client");
+const bcrypt = require("bcrypt");
 
-const { Sequelize } = require('sequelize');
-const bcrypt = require('bcrypt');
-const sequelize = require('./src/sequelize'); // Adjust the path as necessary
-const User = require('./src/models/user'); // Adjust the path as necessary
+const prisma = new PrismaClient();
 
 async function createUser(name, email, password) {
   try {
-    // Sync all defined models with the database
-    await sequelize.sync();
-
     // Hash the password before creating the user
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create the user
-    const newUser = await User.create({
-      name,
-      email,
-      password: hashedPassword,
+    const newUser = await prisma.Employee.create({
+      data: {
+        name,
+        email,
+        password: hashedPassword,
+        phone: " ",
+        photo: " ",
+        address: "",
+        govt_id: "",
+        roles: [],
+        centerUuid: null,
+      },
     });
 
-    console.log(`User ${newUser.name} (${newUser.email}) created successfully.`);
+    console.log(
+      `User ${newUser.name} (${newUser.email}) created successfully.`
+    );
   } catch (err) {
-    console.error('Error creating user:', err);
+    console.error("Error creating user:", err);
   } finally {
-    // Close the database connection
-    await sequelize.close();
+    // Close the Prisma Client connection
+    await prisma.$disconnect();
   }
 }
 
 // Read command line arguments
-const [,, name, email, password] = process.argv;
+const [, , name, email, password] = process.argv;
 
 // Check if all required arguments are provided
 if (!name || !email || !password) {
-  console.error('Usage: node create-user.js <name> <email> <password>');
+  console.error("Usage: node create-user.js <name> <email> <password>");
   process.exit(1);
 }
 

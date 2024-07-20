@@ -9,10 +9,10 @@ generator client {
 
 model Center {
   uuid            String     @id @default(uuid())
-  center_code     String
-  branch_name     String
-  ifsc            String
-  center_incharge String
+  center_code     String?
+  branch_name     String?
+  ifsc            String?
+  center_incharge String?
   employees       Employee[]
   clients         Client[]
 }
@@ -21,13 +21,14 @@ model Employee {
   uuid       String   @id @default(uuid())
   name       String
   email      String   @unique
+  password   String
   phone      String
   photo      String
   address    String
   govt_id    String
   roles      String[]
-  centerUuid String
-  center     Center   @relation(fields: [centerUuid], references: [uuid])
+  centerUuid String?
+  center     Center?  @relation(fields: [centerUuid], references: [uuid])
   clients    Client[] @relation("AgentClients")
 }
 

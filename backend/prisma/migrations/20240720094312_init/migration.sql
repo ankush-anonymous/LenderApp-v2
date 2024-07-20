@@ -1,10 +1,10 @@
 -- CreateTable
 CREATE TABLE "Center" (
     "uuid" TEXT NOT NULL,
-    "center_code" TEXT NOT NULL,
-    "branch_name" TEXT NOT NULL,
-    "ifsc" TEXT NOT NULL,
-    "center_incharge" TEXT NOT NULL,
+    "center_code" TEXT,
+    "branch_name" TEXT,
+    "ifsc" TEXT,
+    "center_incharge" TEXT,
 
     CONSTRAINT "Center_pkey" PRIMARY KEY ("uuid")
 );
@@ -14,6 +14,7 @@ CREATE TABLE "Employee" (
     "uuid" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
     "phone" TEXT NOT NULL,
     "photo" TEXT NOT NULL,
     "address" TEXT NOT NULL,
